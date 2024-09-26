@@ -3,14 +3,21 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})
+->name('home');
+
 Route::view('/teste','tela-teste');
-Route::view('/cadastro','tela-cadastro');
+
+Route::view('/cadastro','tela-cadastro')->name('telaCadastro');
+
+Route::view('/login','login')->name('login');
 
 Route::post('/salva-usuario', function(Request $request){
 $user = new User();
@@ -23,3 +30,25 @@ return "salvo com sucesso";
 
 }
 ) ->name('SalvaUsuario');
+
+
+Route::post('/logar', 
+    function(Request $request){
+       
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+ 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+ 
+            return redirect()->intended('dashboard');
+        }
+ 
+        return back()->withErrors([
+            'email' => 'Essas credenciais não correspondem com nenhuma existente em nosso sistema.',
+        ])->onlyInput('email');
+    
+    }
+    ) ->name('logar');
