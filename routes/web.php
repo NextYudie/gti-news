@@ -26,7 +26,7 @@ $user->email = $request->email;
 $user->password = $request->senha;
 $user->save();
 
-return "salvo com sucesso";
+return redirect()->route('home');
 
 }
 ) ->name('SalvaUsuario');
@@ -43,7 +43,7 @@ Route::post('/logar',
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->intended('dashboard');
+            return redirect()->route('home');
         }
  
         return back()->withErrors([
@@ -52,3 +52,12 @@ Route::post('/logar',
     
     }
     ) ->name('logar');
+
+
+    Route::get('/logout',
+        function (Request $request){
+            Auth::logout();
+            $request->session()->regenerate();
+            return redirect()->route('home');
+        }
+    )->name('logout');
