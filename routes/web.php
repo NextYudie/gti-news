@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Noticia;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -61,3 +62,13 @@ Route::post('/logar',
             return redirect()->route('home');
         }
     )->name('logout');
+
+    Route::get('/gerencia-noticias',
+                function(){
+
+                    $noticias = Noticia::all();
+
+                    return view('gerencia-noticias' , compact('noticias'));
+
+                }
+    )->name('gerenciaNoticias');
