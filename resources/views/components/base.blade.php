@@ -27,21 +27,19 @@
     @endauth
 
     @auth 
-        @if(Auth::user()->cargo == 1)
+        @if(auth::user()->cargo == 1 or auth::user()->cargo == 2)
         <div class="relative" x-data="{menu:false}">
-        <a x-on:click="menu = !menu" class="cursor-pointer text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-4 lg:px-4 py-2 lg:py-1.5 mr-2 dark:bg-[#B0E0E6] dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 ">Gestao</a>  
+        <a x-on:click="menu= !menu" x-on:click.outside="menu = false" class=" cursor-pointer block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Gestão</a>  
         <div x-show="menu" id="userDropdown1" class="absolute z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-[#663379]">
-          <ul class="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
-            <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> My Account </a></li>
-            <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> My Orders </a></li>
-            <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Settings </a></li>
-            <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Favourites </a></li>
-            <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Delivery Addresses </a></li>
-            <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Billing Data </a></li>
-          </ul>
-      
-          <div class="p-2 text-sm font-medium text-gray-900 dark:text-white">
-            <a href="{{route('logout')}}" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Sign Out </a>
+        <ul class="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
+                                    <li><a href="{{route('gerenciaNoticias')}}" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Gerenciar notícias </a></li>
+                                    <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Gerenciar Usuários </a></li>
+                                    <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Financeiro </a></li>
+                                    <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Estatísticas </a></li>
+                                </ul>
+                                <div class="p-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    <a href="{{route('logout')}}" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Sair </a>
+                                </div>
           </div>
         </div>   
     </div>
