@@ -10,9 +10,12 @@ use Illuminate\Http\RedirectResponse;
 
 
 Route::get('/', function () {
-    return view('home');
-})
-->name('home');
+
+    $noticias = Noticia::orderBy('id','desc')->get();
+
+    return view('home', compact('noticias'));
+
+})->name('home');
 
 Route::view('/teste','tela-teste');
 
@@ -71,7 +74,7 @@ Route::post('/logar',
                     return view('gerencia-noticias' , compact('noticias'));
 
                 }
-    )->name('gerenciaNoticias');
+    )->name('gerenciaNoticias')->middleware('auth');
 
     Route::get(
         '/cadastra-noticia',
@@ -79,7 +82,7 @@ Route::post('/logar',
                $noticia = new Noticia();
                 return view('cadastra-noticia', compact('noticia'));
             }
-    )->name('cadastraNoticia');
+    )->name('cadastraNoticia')->middleware('auth'); 
 
 
     Route::post(
@@ -102,7 +105,7 @@ Route::post('/logar',
             return redirect()->route('gerenciaNoticias');
            
         }
-    )->name('SalvaNoticia');
+    )->name('SalvaNoticia')->middleware('auth');
 
 
     Route::get(
@@ -112,6 +115,11 @@ Route::post('/logar',
                 //$noticia = Noticiia::find($noticia);
 
                 return view('exibe-noticia' , compact('noticia'));
+
+                $noticias = Noticia::paginate(10);
+
+    // Retorna a view com as notícias paginadas
+    return view('sua_view', compact('noticias'));
 
         }
     )->name('exibeNoticia');
@@ -125,7 +133,7 @@ Route::post('/logar',
                 return view('edita-noticia' , compact('noticia'));
 
         }
-    )->name('editaNoticia');
+    )->name('editaNoticia')->middleware('auth');
     
 
     Route::post(
@@ -148,7 +156,7 @@ Route::post('/logar',
             return redirect()->route('gerenciaNoticias');
            
         }
-    )->name('alteraNoticia');
+    )->name('alteraNoticia')->middleware('auth');
 
 
     Route::get(
@@ -159,4 +167,7 @@ Route::post('/logar',
 
                 return redirect()->route('gerenciaNoticias');
         }
-    )->name('deletaNoticia');
+    )->name('deletaNoticia')->middleware('auth');
+
+   
+ 
